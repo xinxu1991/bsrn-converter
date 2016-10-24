@@ -21,3 +21,6 @@ octave-workspace
 # Input and output
 /input/*
 /output/*
+
+% Copyrighted functions
+sun_position.m
