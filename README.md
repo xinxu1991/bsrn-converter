@@ -5,7 +5,7 @@ Convert Baseline Surface Radiation Network (BSRN) raw data files (tab delimited 
 http://bsrn.awi.de/
 https://dataportals.pangaea.de/bsrn/
 
-% Solar position calculator
+# Solar position calculator
 This script needs sun position calculator by Vicent Roy, see http://blogs.mathworks.com/pick/2010/07/16/sun_positionm/
 
 # Input
