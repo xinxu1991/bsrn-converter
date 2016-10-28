@@ -14,7 +14,12 @@ station_name = char(station_list{station_num,'Eventlabel'});
 start_year = 2006;
 end_year = 2015;
 
-% check integrity of files
+%% make dir
+if exist(['./output/' station_name])~=7
+    mkdir(['./output/' station_name]);
+end
+
+%% check integrity of files
 fileOUT = fopen(['./input/' station_name '/missing_files.txt'],'w');
 count = 0;
 for year = start_year:1:end_year
@@ -35,6 +40,7 @@ else
     disp(['Good! No file is missing between the year ' num2str(start_year) '-' num2str(end_year) ', proceeding program...']);
 end 
 
+%% convert data
 for year = start_year:1:end_year
     % clear
     clearvars -except station_num station_name year station_list start_year end_year;
@@ -78,7 +84,7 @@ for year = start_year:1:end_year
         G_dif = vertcat(G_dif,temp{4});
     end
     
-    %% calculate solar angles
+    % calculate solar angles
     parfor i=1:1:length(time)
         temp = sun_position(time(i),location);
         alpha_s_deg(i) = 90-temp.zenith;
@@ -91,11 +97,10 @@ for year = start_year:1:end_year
     phi_s_deg = transpose(phi_s_deg);
     phi_s_rad = transpose(phi_s_rad);
     
-    %% calculate EHR
+    % calculate EHR
     G_etr = 1367*(1+0.0334*cos(2*pi*day(time,'dayofyear')/365.25));
     
-    %% export
-    mkdir(['./output/' station_name]);
+    % export
     outfile = ['./output/' station_name '/' station_name '_' num2str(year) '.mat'];
     save(outfile,'time','G_h','G_dir','G_dif','G_etr','alpha_s_deg','alpha_s_rad','phi_s_deg','phi_s_rad');
 end
